@@ -8,7 +8,76 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const PORT = process.env.PORT || 3000;
-
+const {OAuth2Client} = require('google-auth-library');
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var mongoUrl= 'mongodb+srv://sushmanaallaofc:tEB82m12W2PPonnp@cluster0.ei3qq09.mongodb.net/?retryWrites=true&w=majority';
+var db;
+var secret = 'thisisassecretprogrammingandmore';
+var bcrypt = require('bcrypt');
+var CLIENT_ID = '776399895709-3ddui6f51u8capadvdlsh0nejmk2ph8f.apps.googleusercontent.com';
+var jwt = require('jsonwebtoken');
+var cors = require('cors');
+app.use(cors());
+app.get('/', (req,res) =>{ I
+res.send('Welcome to programmingandmore');
+})
+async function verify(client, token) {
+  const ticket = await client.verifyIdToken({
+  idToken: token,
+  audience: CLIENT_ID, // Specify the CLIENT_ID of the app that accesses the backend
+  // Or, if multiple clients access the backend:
+  //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+  });
+  return ticket.getPayload();
+  // const userid = payload ['sub'];
+  // If request specified a G Suite domain:
+  // const domain = payload ['hd"];
+  }
+  app.get('/gauthenticate', async(req,res)=>{ I
+  var token = req.query.id_token;
+  const client = new OAuth2Client (CLIENT_ID);
+  var x = await verify(client, token).catch(console.error);
+if(x.email_verified) {
+db.collection('users').find({email:x.email}).toArray((err, result)=>{
+if(err) throw(err);
+if(result.length<1){
+  db.collection('users').insert([{
+  name:x.name,
+  email:x.email, ssword: string,
+  password:bcrypt.hashSync (x.at_hash, 8)
+  }])
+  db.collection('users').find({email:x.email}).toArray((e,r)=>{
+    if(e) throw e;
+    TRANS
+    var tkn = jwt.sign({id:result[0]._id}, secret);
+    res.send({
+    auth:true,
+    token: tkn
+    })
+  })
+  } else {
+  var token = jwt.sign({id:result[0]._id}, secret);
+  res.send({
+  auth:true,
+  token: token
+  })
+  }
+})
+} else {
+res.send({
+auth: false,
+message: "User unauthorized"
+})
+}
+  })
+MongoClient.connect (mongoUrl, (err,client)=>{
+if(err) console.log("Error while connecting")
+else db = client.db('pandm');
+})
+app.listen(PORT, ()=>{
+console.log('Listening to', PORT);
+})
 // create user account
 app.get("/account/create/:name/:email/:password", function(req, res) {
   // check if account exists
