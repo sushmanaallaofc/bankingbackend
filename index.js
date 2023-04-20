@@ -13,12 +13,10 @@ var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var mongoUrl= 'mongodb+srv://sushmanaallaofc:tEB82m12W2PPonnp@cluster0.ei3qq09.mongodb.net/?retryWrites=true&w=majority';
 var db;
-var secret = 'thisisassecretprogrammingandmore';
+var secret = 'thisisasecretprogrammingcodeofsushma';
 
 var CLIENT_ID = '776399895709-3ddui6f51u8capadvdlsh0nejmk2ph8f.apps.googleusercontent.com';
-var jwt = require('jsonwebtoken');
-var cors = require('cors');
-app.use(cors());
+
 app.get('/', (req,res) =>{ I
 res.send('Welcome to programmingandmore');
 })
