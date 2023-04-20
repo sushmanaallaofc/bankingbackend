@@ -25,9 +25,7 @@
     "firebase-functions": "^4.2.1",
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
+    "nodemon": "^2.0.16",
     "path": "^0.12.7"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
   }
 }
